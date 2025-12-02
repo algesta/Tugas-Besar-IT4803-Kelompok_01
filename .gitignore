@@ -1,7 +1,7 @@
-# Prerequisites
+# File Prasyarat
 *.d
 
-# Compiled Object files
+# File Objek Terkompilasi
 *.slo
 *.lo
 *.o
@@ -11,11 +11,12 @@
 *.gch
 *.pch
 
-# Linker files
+# File Linker
 *.ilk
 
-# Debugger Files
+# File Debugger
 *.pdb
+*.dwo
 
 # Compiled Dynamic libraries
 *.so
@@ -37,5 +38,10 @@
 *.out
 *.app
 
-# debug information files
-*.dwo
+# --- File Spesifik CodeBlocks ---
+# Direktori hasil kompilasi
+bin/
+obj/
+
+# File proyek CodeBlocks
+*.cbp
