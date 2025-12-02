@@ -1,0 +1,39 @@
+#ifndef LIST_PESANAN_H_INCLUDED
+#define LIST_PESANAN_H_INCLUDED
+
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+// --- 1. Definisi Info Element (DLL Pesanan) ---
+// Memenuhi syarat: Minimal 3 atribut, termasuk int/real
+struct InfoPesanan {
+    string id_pesanan;
+    string nama_pelanggan;
+    int total_harga; // Contoh atribut tipe int, bisa juga float/double
+    // Tambahkan atribut lain jika diperlukan, misalnya: string tanggal_pesanan;
+};
+
+// --- 2. Deklarasi Tipe Data Pointer dan Node (DLL) ---
+typedef struct ElementPesanan *address_pesanan;
+
+struct ElementPesanan {
+    InfoPesanan info;
+    address_pesanan next;
+    address_pesanan prev; // PENTING: Pointer PREV untuk Doubly Linked List
+};
+
+// --- 3. Deklarasi List Header ---
+struct ListPesanan {
+    address_pesanan head;
+    address_pesanan tail; // DLL memiliki pointer tail
+};
+
+// --- 4. Deklarasi Fungsi Dasar (Prototype) ---
+void createListPesanan(ListPesanan &L);
+bool isEmptyPesanan(ListPesanan L);
+address_pesanan allocatePesanan(InfoPesanan info);
+// Di sini nanti Anda akan menambahkan fungsi Insert, Delete, Find, dll.
+
+#endif // LIST_PESANAN_H_INCLUDED
