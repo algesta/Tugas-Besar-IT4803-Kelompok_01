@@ -1,27 +1,22 @@
-#ifndef LIST_RELASI_103032400065_H_INCLUDED
-#define LIST_RELASI_103032400065_H_INCLUDED
+#ifndef LIST_RELASI_H_INCLUDED
+#define LIST_RELASI_H_INCLUDED
 
-// Wajib meng-include header List Pesanan Anda, karena Relasi akan menunjuk ke Node Pesanan
-#include "list_pesanan_103032400065.h"
+#include "list_menu.h"
+#include "list_pesanan.h"
 
-// --- 1. Deklarasi Tipe Data Pointer dan Node Relasi ---
-typedef struct ElementRelasi *address_relasi;
+using namespace std;
 
-// ElementRelasi adalah node SLL yang menyimpan pointer ke List Child (Pesanan)
-struct ElementRelasi {
-    // PENTING: Pointer ke List Child (DLL Pesanan)
+typedef struct ElementRelasi *addres_relasi;
+
+struct ElementRelasi{
     address_pesanan child;
-
-    // Pointer next untuk SLL Relasi
     address_relasi next;
+    address_relasi prev;
 };
 
-// --- 2. Deklarasi Fungsi Dasar Relasi ---
-address_relasi allocateRelasi_103032400065(address_pesanan P);
-// Fungsi ini membuat node relasi baru yang menunjuk ke node Pesanan (P)
+address_relasi allocateRelasi(address_pesanan p_pesanan);
 
-// Fungsi untuk menghubungkan Relasi ke List Parent (akan diimplementasikan di list_menu.cpp nanti)
-// address_relasi findRelasi_103032400065(ListMenu L, address_pesanan P);
-// ... dan seterusnya
+void insertRelasi(ListMenu &L_menu, List_Pesanan L_pesanan, string id_menu, string id_pesanan);
+address_relasi findRelasi(ListMenu L_menu, string id_menu, string id_pesanan);
 
-#endif // LIST_RELASI_103032400065_H_INCLUDED
+#endif // LIST_RELASI_H_INCLUDED

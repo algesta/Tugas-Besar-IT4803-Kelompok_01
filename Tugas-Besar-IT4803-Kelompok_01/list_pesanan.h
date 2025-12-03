@@ -1,37 +1,45 @@
-#ifndef LIST_PESANAN_103032400065_H_INCLUDED
-#define LIST_PESANAN_103032400065_H_INCLUDED
+#ifndef LIST_PESANAN_H_INCLUDED
+#define LIST_PESANAN_H_INCLUDED
 
 #include <iostream>
 #include <string>
 
-using namespace std;
+using namspace std;
 
-// --- 1. Definisi Info Element (DLL Pesanan) ---
-// Minimal 3 atribut wajib:
-struct InfoPesanan {
+struct InfoPesanan{
     string id_pesanan;
-    string nama_pelanggan;
-    int total_harga; // Atribut tipe int/real
+    string nama_pelanggan:
+    int total_harga;
 };
 
-// --- 2. Deklarasi Tipe Data Pointer dan Node (DLL) ---
 typedef struct ElementPesanan *address_pesanan;
 
-struct ElementPesanan {
+struct ElementPesanan{
     InfoPesanan info;
     address_pesanan next;
-    address_pesanan prev; // Penanda Doubly Linked List
+    address_prev;
 };
 
-// --- 3. Deklarasi List Header ---
-struct ListPesanan {
+struct ListPesanan{
     address_pesanan head;
-    address_pesanan tail; // DLL membutuhkan pointer tail
+    address_pesanan tail;
 };
 
-// --- 4. Deklarasi Fungsi Dasar (Prototype) ---
-void createListPesanan_103032400065(ListPesanan &L);
-bool isEmptyPesanan_103032400065(ListPesanan L);
-address_pesanan allocatePesanan_103032400065(InfoPesanan info);
+void createListPesanan(ListPesanan &L);
+address_pesanan allocatePesanan(InfoPesanan info);
+bool isEmptyPesanan(ListPesanan L);
 
-#endif // LIST_PESANAN_103032400065_H_INCLUDED
+void insertFirstPesanan(ListPesanan &L, address_pesanan p);
+void insertLastPesanan(ListPesanan &L, address_pesanan p);
+void insertAftterPesanan(ListPesanan &L, address_pesanan prec, address_pesanan p);
+
+void deleteFirstPesanan(ListPesanan &L, address_pesanan &p);
+void deleteLastPesanan(ListPesanan &L, address_Pesanan &p);
+void deleteAfterPesanan(ListPesanan &L, address_pesanan prec, address_pesanan &p);
+
+address_pesanan findPesanan(ListPesanan L, string id_pesanan);
+void showAllPesanan(ListPesanan L);
+void showPesananRelasiMenu(ListPesanan L, string id_menu);
+void deletePesananTotal(ListPesanan &L, ListMenu &L, string id_pesanan);
+
+#endif // LIST_PESANAN_H_INCLUDED

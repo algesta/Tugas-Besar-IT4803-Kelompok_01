@@ -1,45 +1,83 @@
-#include "list_pesanan_103032400065.h"
-// Wajib menyertakan file header yang berisi deklarasi struct dan prototype fungsi.
+#include "list_pesanan.h"
 
-// --- 1. Fungsi createListPesanan (Inisialisasi List Kosong) ---
-// Tujuan: Membuat list baru dengan menginisialisasi head dan tail menjadi NULL.
-void createListPesanan_103032400065(ListPesanan &L) {
-    // List kosong jika head dan tail menunjuk ke NULL
-    L.head = NULL;
-    L.tail = NULL;
+void createListPesanan(ListPesanan &L){
+    L.head = nullptr;
+    L.tail = nullptr;
 }
 
-// --- 2. Fungsi isEmptyPesanan (Cek List Kosong) ---
-// Tujuan: Mengembalikan TRUE jika list belum memiliki elemen (node).
-bool isEmptyPesanan_103032400065(ListPesanan L) {
-    // Dalam DLL, cukup cek pointer head.
-    return L.head == NULL;
+address_pesanan allocatePesanan(InfoPesanan info){
+    address_pesanan p = new ElementPesanan;
+    p->info = info;
+    p->next = nullptr;
+    p->prev = nullptr;
+
+    return p
 }
 
-// --- 3. Fungsi allocatePesanan (Alokasi Node Baru) ---
-// Tujuan: Membuat node baru di memori (heap) dan mengisi datanya.
-address_pesanan allocatePesanan_103032400065(InfoPesanan info) {
-    // Alokasikan memori untuk elemen baru (node)
-    address_pesanan P = new ElementPesanan;
-
-    // Isi data (info) dengan data yang diberikan
-    P->info = info;
-
-    // Inisialisasi pointer next dan prev untuk node baru
-    P->next = NULL;
-    P->prev = NULL; // PENTING: Node baru pada DLL selalu memiliki prev NULL
-
-    return P;
+bool isEmptyPesanan(ListPesanan L){
+    return L.head == nullptr;
 }
 
-/* Setelah ini, Anda akan melanjutkan dengan fungsi-fungsi utama DLL lainnya, seperti:
+void insertFirstPesanan(ListPesanan &L, address_pesanan p){
+    if (isEmptyPesanan(L)){
+        L.head = p;
+        L.tail = p;
+    }else{
+        p->next = L.head;
+        L.head->prev = p;
+        L.head = p;
+    }
+}
 
-// Fungsi Insert:
-// void insertFirstPesanan_103032400065(ListPesanan &L, address_pesanan P);
-// void insertLastPesanan_103032400065(ListPesanan &L, address_pesanan P);
-// void insertAfterPesanan_103032400065(ListPesanan &L, address_pesanan Prec, address_pesanan P);
+Void insertAferPesanan(ListPesanan &L, address_pesanan prec, address_pesanan p){
+    if (prec = nullptr){
+        cout << "Error: Node predecessor tidak boleh ditemukan." << endl;
+        return;
+    }
+    if (prec == L.tail){
+        insertLastPesanan(L, p);
+        return;
+    }
+    p->next = prec->next;
+    p->prev = prec;
 
-// Fungsi Delete:
-// void deleteFirstPesanan_103032400065(ListPesanan &L, address_pesanan &P);
-// ... dan seterusnya
-*/
+    prec->next->prev = p;
+    prec->next = p;
+}
+
+void deleteFirstPesanan(ListPesanan &L, address_pesanan &p){
+    p = L.head;
+
+    if (isEmptyPesanan(L)){
+        p = nullptr;
+        return;
+    }
+    if (L.head == L.tail){
+        L.head = nullptr;
+        L.tail = nullptr;
+    } else{
+        L.head = p->next;
+        L.head->prev = nullptr;
+        p->next = nullptr;
+    }
+}
+
+void deleteAfterPesanan(ListPesanan &L, address_pesanan prec, address_pesanan &p){
+    if (prec == nullptr || prec->next == null){
+        p = nullptr;
+        return;
+    }
+    p = prec->next;
+
+    if (p == L.tail) {
+        L.tail = prec;
+        L.tail->next = nullptr;
+        p->prev = nullptr;
+        return;
+    }
+    prec->next = p->next;
+    p->next->prev = prec;
+
+    p->next = nullptr;
+    p->prev = nullptr;
+}

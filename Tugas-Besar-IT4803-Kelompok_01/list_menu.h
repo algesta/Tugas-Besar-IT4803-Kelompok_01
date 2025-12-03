@@ -3,42 +3,46 @@
 
 #include <iostream>
 #include <string>
-
-// Header Relasi (akan dibuat bersama) perlu di-include di sini
-// #include "list_relasi_103032400065.h" // Nanti setelah file relasi jadi
+#include "list_relasi.h"
 
 using namespace std;
 
-// --- 1. Definisi Info Element (Menu Restoran) ---
-// Memenuhi syarat: Minimal 3 atribut wajib
-struct InfoMenu {
+struct InfoMenu{
     string id_menu;
     string nama_menu;
-    int harga; // Atribut tipe int/real
+    int harga;
 };
 
-// --- 2. Deklarasi Tipe Data Pointer dan Node ---
 typedef struct ElementMenu *address_menu;
-// address_relasi didefinisikan di list_relasi.h
 
-// ElementMenu adalah node dalam Singly Linked List (SLL)
-struct ElementMenu {
+struct ElementMenu{
     InfoMenu info;
-    address_menu next; // PENTING: Penanda Singly Linked List (hanya next)
-
-    // PENTING: Pointer ke List Relasi (Sesuai MLL Tipe A)
-    // List Relasi akan tersimpan di setiap node Menu (Parent)
-    // address_relasi first_relasi; // Nanti diisi setelah file relasi dibuat
+    address_menu next;
+    address_relasi first_relasi;
 };
 
-// --- 3. Deklarasi List Header ---
-struct ListMenu {
-    address_menu head; // SLL hanya membutuhkan pointer head
+struct ListMenu{
+    address_menu head;
 };
 
-// --- 4. Deklarasi Fungsi Dasar (Prototype) ---
-void createListMenu(ListMenu &L);
+void createListtMenu(ListMenu &L);
+address_menu allocateMenu(ListMenu info);
 bool isEmptyMenu(ListMenu L);
-address_menu allocateMenu(InfoMenu info);
-// void insertFirstMenu(ListMenu &L, address_menu P);
-// ... dan seterusnya
+
+void insertFirstMenu(ListMenu &L, address_menu p);
+void insertLastMenu(ListMenu &L, addresss_menu p);
+void insertAfterMenu(ListMenu &L, address_menu prec, address_menu p);
+
+void deleteFirstMenu(ListMenu &L, address_menu &p);
+void deleteLastMenu(ListMenu &L, address_menu &p);
+void deleteAfterMenu(ListMenu &L, address_menu prec, address_menu &p);
+
+address_menu findMenu(ListMenu L, string id_menu);
+void showAllMenu(ListMenu L);
+
+void showMenuRelasi(ListMenu L);
+void showMenuRelasiChildTertentu(ListMenu L, string id_pesanan);
+int countRelasiMenu(address_menu p_menu);
+void deleteMenuTotal(ListMenu &L, string id_menu);
+
+#endif // LIST_MENU_H_INCLUDED
