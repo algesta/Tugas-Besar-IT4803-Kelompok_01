@@ -1,45 +1,46 @@
-#ifndef LIST_PESANAN_H_INCLUDED
-#define LIST_PESANAN_H_INCLUDED
+#ifndef LIST_PESANAN_H
+#define LIST_PESANAN_H
 
 #include <iostream>
 #include <string>
+#include "list_menu_relasi.h"
 
-using namspace std;
+using namespace std;
 
-struct InfoPesanan{
+struct InfoTypePesanan{
     string id_pesanan;
-    string nama_pelanggan:
+    string nama_pelanggan;
     int total_harga;
+    string status_pesanan;
 };
 
-typedef struct ElementPesanan *address_pesanan;
+typedef struct ElementPesanan* address_pesanan;
 
 struct ElementPesanan{
-    InfoPesanan info;
+    InfoTypePesanan info;
     address_pesanan next;
-    address_prev;
+    address_pesanan prev;
+    address_relasi first_relasi_menu;
 };
 
 struct ListPesanan{
-    address_pesanan head;
-    address_pesanan tail;
+    address_pesanan first;
+    address_pesanan last;
 };
 
 void createListPesanan(ListPesanan &L);
-address_pesanan allocatePesanan(InfoPesanan info);
 bool isEmptyPesanan(ListPesanan L);
+address_pesanan allocatePesanan(InfoTypePesanan info);
 
-void insertFirstPesanan(ListPesanan &L, address_pesanan p);
-void insertLastPesanan(ListPesanan &L, address_pesanan p);
-void insertAftterPesanan(ListPesanan &L, address_pesanan prec, address_pesanan p);
+void insertFirstPesanan(ListPesanan &L, address_pesanan P);
+void insertAfterPesanan(Listpesanan &L, address_pesanan prec, address_pesanan P);
+void insertLastPesanan(ListPesanan &L, address_pesanan P);
 
-void deleteFirstPesanan(ListPesanan &L, address_pesanan &p);
-void deleteLastPesanan(ListPesanan &L, address_Pesanan &p);
-void deleteAfterPesanan(ListPesanan &L, address_pesanan prec, address_pesanan &p);
+void deleteFirstPesanan(ListPesanan &L, address_pesanan &P);
+void deleteAfterPesanan(ListPesanan &L, address_pesanan prec, address_pesanan &P);
+void deleteLastPesanan(ListPesanan &L, address_pesanan &P);
 
 address_pesanan findPesanan(ListPesanan L, string id_pesanan);
 void showAllPesanan(ListPesanan L);
-void showPesananRelasiMenu(ListPesanan L, string id_menu);
-void deletePesananTotal(ListPesanan &L, ListMenu &L, string id_pesanan);
 
-#endif // LIST_PESANAN_H_INCLUDED
+#endif // LIST_CHILD_H

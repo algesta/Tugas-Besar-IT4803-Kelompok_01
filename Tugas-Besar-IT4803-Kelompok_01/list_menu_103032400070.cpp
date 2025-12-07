@@ -1,46 +1,68 @@
-#include "list_menu.h"
-// Wajib menyertakan file header yang berisi deklarasi struct dan prototype fungsi.
+#include "list_menu_relasi.h"
+#include "list_pesanan.h"
 
-// --- 1. Fungsi createListMenu (Inisialisasi List Kosong) ---
-// Tujuan: Membuat list baru dengan menginisialisasi head menjadi NULL.
-void createListMenu(ListMenu &L) {
-    // List kosong jika head menunjuk ke NULL
-    L.head = NULL;
+address_menu findMenu(ListMenu L, string id_menu){
+    address_menu P= L.first;
+    while (P != nullptr){
+        if (P->info.id_menu == id_menu){
+            return P;
+        }
+        P = P->next;
+    }
+    return nullptr;
 }
 
-// --- 2. Fungsi isEmptyMenu (Cek List Kosong) ---
-// Tujuan: Mengembalikan TRUE jika list belum memiliki elemen (node).
-bool isEmptyMenu(ListMenu L) {
-    // Dalam SLL, cukup cek pointer head.
-    return L.head == NULL;
+void showAllMenu(ListMenu L){
+    if (L.first == nullptr){
+        cout << "--- List Menu Kosong ---" << endl;
+        return;
+    }
+    address_menu P = L.first;
+    int i = 1;
+    cout << "===== DAFTAR MENU =====" << endl;
+    while (P != nullptr){
+        cout << i << ". ID: " << P->info.id_menu << " | Nama: " << P->info.nama_menu << " | Harga: Rp " << P->info.harga << endl;
+        P = P->next;
+        i++;
+    }
+    cout << "=======================" << endl;
 }
 
-// --- 3. Fungsi allocateMenu (Alokasi Node Baru) ---
-// Tujuan: Membuat node baru di memori (heap) dan mengisi datanya.
-address_menu allocateMenu(InfoMenu info) {
-    // Alokasikan memori untuk elemen baru (node)
-    address_menu P = new ElementMenu;
+void insertLastMenu(ListMenu &L, address_menu P){
+    if (L.first == nullptr) {
+        L.first = P;
+        cout << "SUCCESS: Menu " << P->info.nama_menu << " ditambahkan di akhir list (sebagai elemen pertama)." << endl;
+        return;
+    }
 
-    // Isi data (info) dengan data yang diberikan
-    P->info = info;
-
-    // Inisialisasi pointer next untuk node baru
-    P->next = NULL;
-
-    // Inisialisasi head List Relasi di node Menu (akan diaktifkan nanti)
-    // P->first_relasi = NULL;
-
-    return P;
+    address_menu last = L.first;
+    while (last->next != nullptr){
+        last = last->next;
+    }
+    last->next = P;
+    cout << "SUCCESS: Menu " << P->info.nama_menu << " ditambahkan di akhir list." << endl;
 }
 
-/* Setelah ini, rekan Anda akan melanjutkan dengan fungsi-fungsi SLL lainnya, seperti:
+void deleteFirstMenu(ListMenu &L, address_menu &P){
+    P = L.first;
+    if (L.first != nullptr){
+        L.first = P->next;
+        P->next = nullptr;
+        cout << "SUCCESS: Menu ID " << P->info.id_menu << " dihapus dari awal list." << endl;
+    } else {
+        cout << "ERROR: List Menu kosong. Delete First gagal." << endl;
+        P = nullptr;
+    }
+}
 
-// Fungsi Insert:
-// void insertFirstMenu(ListMenu &L, address_menu P);
-// void insertLastMenu(ListMenu &L, address_menu P);
-// void insertAfterMenu(ListMenu &L, address_menu Prec, address_menu P);
-
-// Fungsi Delete:
-// void deleteFirstMenu(ListMenu &L, address_menu &P);
-// ... dan seterusnya
-*/
+void deleteAfterMenu(ListMenu &L, address_menu prec, address_menu &P) {
+    if (prec != nullptr && prec->next != nullptr){
+        P = prec->next;
+        prec->next = P->next;
+        P->next = nullptr;
+        cout << "SUCCESS: Menu ID " << P->info.id_menu << " dihapus setelah " << prec->info.id_menu << "." << endl;
+    } else {
+        P = nullptr;
+        cout << "ERROR: Predecessor tidak valid atau tidak ada elemen setelahnya. Delete After gagal." << endl;
+    }
+}
