@@ -1,21 +1,34 @@
 #ifndef LIST_MENU_RELASI_H
 #define LIST_MENU_RELASI_H
 
+#include "list_pelanggan.h"
 #include <iostream>
 #include <string>
 
 using namespace std;
 
-typedef struct ElementPesanan *address_pesanan;
-typedef struct ElementRelasi *address_relasi;
+struct ElementMenu;
+struct ElementRelasi;
+
+typedef struct ElementMenu* address_menu;
+typedef struct ElementRelasi* address_relasi;
 
 struct InfoTypeMenu{
-    string id_menu;
     string nama_menu;
-    int harga;
+    int id_menu;
+    double harga_menu;
 };
 
-typedef struct ElementMenu *address_menu;
+struct InfoTypeRelasi{
+    string nama_pelanggan;
+    int id_pelanggan;
+    int id_menu;
+};
+
+struct ElementRelasi{
+    InfoTypeRelasi info;
+    address_relasi next;
+};
 
 struct ElementMenu{
     InfoTypeMenu info;
@@ -27,12 +40,7 @@ struct ListMenu{
     address_menu first;
 };
 
-struct ElementRelasi{
-    address_relasi next;
-    address_pesanan child;
-    address_menu parent;
-};
-
+//======PARENTTTTTTTTTNIHBROOO
 void createListMenu(ListMenu &L);
 bool isEmptyMenu(ListMenu L);
 address_menu allocateMenu(InfoTypeMenu info);
@@ -42,30 +50,45 @@ void insertLastMenu(ListMenu &L, address_menu P);
 void insertAfterMenu(ListMenu &L, address_menu prec, address_menu P);
 
 void deleteFirstMenu(ListMenu &L, address_menu &P);
-void deleteAfterMenu(ListMenu &L, address_menu prec, address_menu &P);
 void deleteLastMenu(ListMenu &L, address_menu &P);
+void deleteAfterMenu(ListMenu &L, address_menu prec, address_menu &P);
 
-address_menu findMenu(ListMenu L, string id_menu);
 void showAllMenu(ListMenu L);
+address_menu findMenuById(ListMenu L, int id_menu);
+address_menu findMenuByName(ListMenu L, string nama_menu);
 
-address_relasi allocateRelasi(address_pesanan P_pesanan, address_menu P_menu);
-void insertRelasi(address_menu &P_menu, address_pesanan P_pesanan, address_relasi R_utama, address_relasi R_balik);
+//======RELASIIIIIIINIHBROOOO
+address_relasi allocateRelasi(InfoTypeRelasi info);
 
-address_relasi findRelasi(address_menu P_menu, string id_pesanan);
-void deleteRelasi(address_menu &P_menu, address_relasi &P_relasi_utama, address_relasi &P_relasi_balik);
+void insertFirstRelasi(address_relasi &first_relasi, address_relasi P);
+void insertLastRelasi(address_relasi &first_relasi, address_relasi P);
+void insertAfterRelasi(address_relasi &first_relasi, address_relasi prec, address_relasi P);
 
-void deleteMenuTotal(ListMenu &L_menu, ListPesanan_ptr L_pesanan, string id_menu);
-void deletePesananTotal(ListPesanan &L_pesanan, address_pesanan &P_pesanan);
+void deleteFirstRelasi(address_relasi &first_relasi, address_relasi &P);
+void deleteLastRelasi(address_relasi &first_relasi, address_relasi &P);
+void deleteAfterRelasi(address_relasi &first_relasi, address_relasi prec, address_relasi &P);
 
-void showPesananFromMenu(address_menu P_menu);
-void showMenuRelasi(ListMenu L_menu);
-void showMenuOfPesanan(address_pesanan P_pesanan);
-void showPesananRelasi(ListPesanan L_pesanan);
+void showAllRelasi(address_relasi first_relasi);
 
-int countRelasiDiMenu(addess_menu P_menu);
-int countRelasiDiPesanan(address_pesanan P_pesanan);
-int countPesananTanpaRelasi(ListPesanan L_pesanan);
+//======PENGKONDISIANNN
+bool insertMenuIfUnique(ListMenu &L, InfoTypeMenu info);
+bool deleteMenuIfNoRelation(ListMenu &L, int id_menu);
 
-void editRelasiTotal(ListMenu &L_menu, ListPesanan_ptr L_pesanan, string id_menu, string id_pesanan_lama, string id_pesanan_baru);
+bool insertPelangganIfUnique(ListPelanggan &L, InfoTypePelanggan info);
+bool deletePelangganIfNoRelation(ListPelanggan &LP, ListMenu &LM, int id_pelanggan);
 
-#endif // LIST_PARENT_RELASI_H
+//======RELASI UNTUK STUDI KASUS
+bool relasiSudahAda(address_menu menu, int id_pelanggan);
+bool tambahRelasiMenuPelanggan(ListMenu &menuList, ListPelanggan &pelangganList, int id_menu, int id_pelanggan);
+
+//======KOMPUTASI MIN 2
+bool pelangganMemilikiRelasi(const ListMenu &menuList, int id_pelanggan);
+int hitungPelangganTanpaRelasi(const ListPelanggan &LP, const ListMenu &LM);
+
+int hitungRelasiMenu(address_menu menu);
+void tampilkanJumlahPelangganPerMenu(const ListMenu &L);
+
+//======OPSIIIWW
+address_relasi findRelationById(address_relasi first_relasi, int id_pelanggan, int id_menu);
+
+#endif // LIST_MENU_RELASI_H

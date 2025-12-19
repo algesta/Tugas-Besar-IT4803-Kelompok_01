@@ -1,0 +1,72 @@
+# depslib dependency file v1.0
+1766103406 source:c:\users\rajaalgesta\tugas-besar-it4803-kelompok_01\tugas-besar-it4803-kelompok_01\list_pelanggan_103032400065.cpp
+	"list_pelanggan.h"
+	"list_menu_relasi.h"
+	<iostream>
+
+1766104247 c:\users\rajaalgesta\tugas-besar-it4803-kelompok_01\tugas-besar-it4803-kelompok_01\list_pelanggan.h
+	<iostream>
+	<string>
+
+1766073354 source:c:\users\rajaalgesta\tugas-besar-it4803-kelompok_01\tugas-besar-it4803-kelompok_01\list_pelanggan_103032400070.cpp
+	"list_pelanggan.h"
+	"list_menu_relasi.h"
+	<iostream>
+
+1766103390 source:c:\users\rajaalgesta\tugas-besar-it4803-kelompok_01\tugas-besar-it4803-kelompok_01\list_menu_103032400065.cpp
+	"list_menu_relasi.h"
+	<iostream>
+
+1766104247 c:\users\rajaalgesta\tugas-besar-it4803-kelompok_01\tugas-besar-it4803-kelompok_01\list_menu_relasi.h
+	"list_pelanggan.h"
+	<iostream>
+	<string>
+
+1766072267 source:c:\users\rajaalgesta\tugas-besar-it4803-kelompok_01\tugas-besar-it4803-kelompok_01\list_menu_103032400070.cpp
+	"list_menu_relasi.h"
+	<iostream>
+
+1766073639 source:c:\users\rajaalgesta\tugas-besar-it4803-kelompok_01\tugas-besar-it4803-kelompok_01\list_relasi.cpp
+	"list_menu_relasi.h"
+	<iostream>
+
+1766102821 source:c:\users\rajaalgesta\tugas-besar-it4803-kelompok_01\tugas-besar-it4803-kelompok_01\main_admin.cpp
+	"main_admin.h"
+	"list_menu_relasi.h"
+	"list_pelanggan.h"
+	<iostream>
+
+1766102727 source:c:\users\rajaalgesta\tugas-besar-it4803-kelompok_01\tugas-besar-it4803-kelompok_01\main.cpp
+	"main_admin.h"
+	"main_user.h"
+	"list_menu_relasi.h"
+	"list_pelanggan.h"
+	<iostream>
+
+1765942536 c:\users\rajaalgesta\tugas-besar-it4803-kelompok_01\tugas-besar-it4803-kelompok_01\main_admin.cpp
+	"list_menu_relasi.h"
+	"list_pelanggan.h"
+	"main_admin.h"
+
+1765942536 c:\users\rajaalgesta\tugas-besar-it4803-kelompok_01\tugas-besar-it4803-kelompok_01\main_user.cpp
+	"list_menu_relasi.h"
+	"list_pelanggan.h"
+	"main_user.h"
+
+1766073932 source:c:\users\rajaalgesta\tugas-besar-it4803-kelompok_01\tugas-besar-it4803-kelompok_01\main_user.cpp
+	"main_user.h"
+	"list_menu_relasi.h"
+	"list_pelanggan.h"
+	<iostream>
+
+1765941694 c:\users\rajaalgesta\tugas-besar-it4803-kelompok_01\tugas-besar-it4803-kelompok_01\main_admin_user.h
+	<iostream>
+
+1766104247 c:\users\rajaalgesta\tugas-besar-it4803-kelompok_01\tugas-besar-it4803-kelompok_01\main_admin.h
+	"list_menu_relasi.h"
+	"list_pelanggan.h"
+
+1766104247 c:\users\rajaalgesta\tugas-besar-it4803-kelompok_01\tugas-besar-it4803-kelompok_01\main_user.h
+	"list_menu_relasi.h"
+	"list_pelanggan.h"
+

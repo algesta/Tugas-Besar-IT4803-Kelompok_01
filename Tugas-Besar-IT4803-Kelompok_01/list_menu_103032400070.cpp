@@ -1,10 +1,22 @@
 #include "list_menu_relasi.h"
-#include "list_pesanan.h"
 
-address_menu findMenu(ListMenu L, string id_menu){
-    address_menu P= L.first;
+#include <iostream>
+
+using namespace std;
+
+address_menu findMenuById(ListMenu L, int id_menu){
+    address_menu P = L.first;
+    while (P){
+        if(P->info.id_menu == id_menu) return P;
+        P = P->next;
+    }
+    return nullptr;
+}
+
+address_menu findMenuByName(ListMenu L, string nama_menu){
+    address_menu P = L.first;
     while (P != nullptr){
-        if (P->info.id_menu == id_menu){
+        if (P->info.nama_menu == nama_menu){
             return P;
         }
         P = P->next;
@@ -12,57 +24,107 @@ address_menu findMenu(ListMenu L, string id_menu){
     return nullptr;
 }
 
+address_relasi findRelationById(address_relasi first_relasi, int id_pelanggan, int id_menu){
+    address_relasi R = first_relasi;
+    while (R != nullptr){
+        if (R->info.id_pelanggan == id_pelanggan && R->info.id_menu == id_menu){
+            return R;
+        }
+        R = R->next;
+    }
+    return nullptr;
+}
+
+
 void showAllMenu(ListMenu L){
-    if (L.first == nullptr){
-        cout << "--- List Menu Kosong ---" << endl;
+    address_menu M = L.first;
+    if (M == nullptr){
+        cout << "\nMenu kosong.\n";
         return;
     }
-    address_menu P = L.first;
-    int i = 1;
-    cout << "===== DAFTAR MENU =====" << endl;
+    while (M != nullptr){
+        cout << "ID: " << M->info.id_menu
+             << ", Nama: " << M->info.nama_menu
+             << ", Harga: " << M->info.harga_menu << endl;
+        M = M->next;
+    }
+}
+
+void showAllRelasi(address_relasi first_relasi){
+    if (first_relasi == nullptr){
+        cout << "  Tidak ada pelanggan.\n";
+        return;
+    }
+    address_relasi R = first_relasi;
+
+    while (R){
+        cout << "  - " << R->info.nama_pelanggan << " (ID: " << R->info.id_pelanggan << ")\n";
+        R = R->next;
+    }
+}
+
+bool tambahRelasiMenuPelanggan(ListMenu &menuList, ListPelanggan &pelangganList, int id_menu, int id_pelanggan){
+    address_menu M = findMenuById(menuList, id_menu);
+    address_pelanggan P = findPelangganById(pelangganList, id_pelanggan);
+    if (M == nullptr || P == nullptr){
+        cout << "Menu atau pelanggan tidak ditemukan.\n";
+        return false;
+    }
+    address_relasi R = M->first_relasi;
+
+    while (R != nullptr){
+        if (R->info.id_pelanggan == id_pelanggan){
+            cout << "Relasi sudah ada.\n";
+            return false;
+        }
+        R = R->next;
+    }
+
+    InfoTypeRelasi info;
+    info.id_menu = id_menu;
+    info.id_pelanggan = id_pelanggan;
+    info.nama_pelanggan = P->info.nama_pelanggan;
+
+    address_relasi newRelasi = allocateRelasi(info);
+    insertLastRelasi(M->first_relasi, newRelasi);
+    return true;
+}
+
+void tampilkanJumlahPelangganPerMenu(const ListMenu &L){
+    address_menu M = L.first;
+    while   (M != nullptr){
+        int jumlah = 0;
+        address_relasi R = M->first_relasi;
+        while (R != nullptr){
+            jumlah++;
+            R = R->next;
+        }
+        cout << "Menu " << M->info.nama_menu << " memiliki " << jumlah << " pelanggan.\n";
+        M = M->next;
+    }
+}
+
+int hitungPelangganTanpaRelasi(const ListPelanggan &LP, const ListMenu &LM){
+    int count = 0;
+    address_pelanggan P = LP.first;
     while (P != nullptr){
-        cout << i << ". ID: " << P->info.id_menu << " | Nama: " << P->info.nama_menu << " | Harga: Rp " << P->info.harga << endl;
+        bool punyaRelasi = false;
+        address_menu M = LM.first;
+        while (M != nullptr && !punyaRelasi){
+            address_relasi R = M->first_relasi;
+            while (R != nullptr){
+                if (R->info.id_pelanggan == P->info.id_pelanggan){
+                    punyaRelasi = true;
+                    break;
+                }
+                R = R->next;
+            }
+            M = M->next;
+        }
+        if (!punyaRelasi){
+            count++;
+        }
         P = P->next;
-        i++;
     }
-    cout << "=======================" << endl;
-}
-
-void insertLastMenu(ListMenu &L, address_menu P){
-    if (L.first == nullptr) {
-        L.first = P;
-        cout << "SUCCESS: Menu " << P->info.nama_menu << " ditambahkan di akhir list (sebagai elemen pertama)." << endl;
-        return;
-    }
-
-    address_menu last = L.first;
-    while (last->next != nullptr){
-        last = last->next;
-    }
-    last->next = P;
-    cout << "SUCCESS: Menu " << P->info.nama_menu << " ditambahkan di akhir list." << endl;
-}
-
-void deleteFirstMenu(ListMenu &L, address_menu &P){
-    P = L.first;
-    if (L.first != nullptr){
-        L.first = P->next;
-        P->next = nullptr;
-        cout << "SUCCESS: Menu ID " << P->info.id_menu << " dihapus dari awal list." << endl;
-    } else {
-        cout << "ERROR: List Menu kosong. Delete First gagal." << endl;
-        P = nullptr;
-    }
-}
-
-void deleteAfterMenu(ListMenu &L, address_menu prec, address_menu &P) {
-    if (prec != nullptr && prec->next != nullptr){
-        P = prec->next;
-        prec->next = P->next;
-        P->next = nullptr;
-        cout << "SUCCESS: Menu ID " << P->info.id_menu << " dihapus setelah " << prec->info.id_menu << "." << endl;
-    } else {
-        P = nullptr;
-        cout << "ERROR: Predecessor tidak valid atau tidak ada elemen setelahnya. Delete After gagal." << endl;
-    }
+    return count;
 }
